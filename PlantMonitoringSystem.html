@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Plant Monitoring System | Byte4ge Web Solutions</title>
+    <style type="text/css">
+        body {
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .login-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            margin: auto;
+            margin-top: 100px;
+        }
+
+        .login-container h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .login-container label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .login-container input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .login-container button:hover {
+            background-color: #0056b3;
+        }
+
+        .login-container p {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .data-item h2 {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .data-item p {
+            font-size: 24px;
+            font-weight: bold;
+            color: #6eb7ff;
+        }
+
+        @media (max-width: 600px) {
+
+            .login-container,
+            .data-container {
+                padding: 15px;
+                max-width: 90%;
+            }
+
+            .login-container h1,
+            .data-container h1 {
+                font-size: 24px;
+            }
+
+            .login-container input,
+            .data-container input,
+            .login-container button,
+            .data-container button {
+                font-size: 14px;
+            }
+        }
+
+        .logout-button {
+            background-color: #dc3545;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+        }
+
+        .logout-button:hover {
+            background-color: #c82333;
+        }
+
+        .data-container {
+            display: flex;
+            justify-content: center;
+            width: 50%;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .data-item {
+            text-align: center;
+        }
+
+        .data-item h2 {
+            font-size: 50px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .data-item p {
+            font-size: 48px;
+            font-weight: bold;
+            color: #6eb7ff;
+        }
+
+        .data-head {
+            margin: auto;
+            width: 50%;
+            text-align: center;
+            font-size: 45px;
+            font-weight: bold;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+        }
+
+        .data-head2 {
+            margin: auto;
+            width: 50%;
+            text-align: center;
+            font-size: 25px;
+            font-weight: bold;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+        }
+
+        .btn {
+            text-decoration: none;
+        }
+
+        @media screen and (max-width: 805px) {
+            .data-head {
+                margin: auto;
+                text-align: center;
+                font-size: 25px;
+                font-weight: bold;
+                margin: 20px auto;
+                padding: 10px;
+                background-color: #ffffff;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+                border-radius: 20px;
+            }
+
+            .data-head2 {
+                margin: auto;
+                text-align: center;
+                font-size: 15px;
+                font-weight: bold;
+                margin: 5px auto;
+                padding: 20px;
+                background-color: #ffffff;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+                border-radius: 20px;
+                text-decoration: none;
+            }
+
+            .data-item h2 {
+                font-size: 34px;
+                font-weight: bold;
+            }
+        }
+
+        .switch-container {
+            text-align: center;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            display: none;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: #4caf50;
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(26px);
+        }
+
+        #statusText {
+            margin-top: 10px;
+            font-size: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div class="loginmain">
+        <div class="login-container" id="loginContainer">
+            <h1>Realtime Plant Monitoring</h1>
+            <h2>Login to continue</h2>
+            <form id="loginForm">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required />
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required />
+                <button type="submit">Login</button>
+                <p id="message"></p>
+            </form>
+        </div>
+    </div> -->
+    <div id="dataContainer" >
+        <div class="data-head">Plant Monitoring System 😎
+
+        </div>
+
+
+        <div class="data-container">
+            <div class="data-item">
+                <h2>Humidity Level</h2>
+                <p class="value" id="humidity">Connecting To Server 🙄</p>
+                <h2>Temperature Level</h2>
+                <p class="value" id="temp">Connecting To Server 🙄</p>
+                <h2>Soil Moisture Level</h2>
+                <p class="value" id="MoistureValue">Connecting To Server 🙄</p>
+                <h3 id="motorStatus"></h3>
+            </div>
+        </div>
+
+        <div class="switch-container">
+            <div class="switch-item">
+                <h3>Urea Motor</h3>
+                <label class="switch">
+                    <input type="checkbox" id="switch1" />
+                    <span class="slider"></span>
+                </label>
+                <p id="status1">OFF</p>
+            </div>
+
+            <div class="switch-item">
+                <h3>Potassium Motor</h3>
+                <label class="switch">
+                    <input type="checkbox" id="switch2" />
+                    <span class="slider"></span>
+                </label>
+                <p id="status2">OFF</p>
+            </div>
+
+            <div class="switch-item">
+                <h3>Zinc Sulfate Motor</h3>
+                <label class="switch">
+                    <input type="checkbox" id="switch3" />
+                    <span class="slider"></span>
+                </label>
+                <p id="status3">OFF</p>
+            </div>
+        </div>
+        <div class="data-head2">
+            <button class="logout-button" id="logoutButton">Logout</button>
+
+        </div>
+    </div>
+    <!-- <a href="https://iistbihar.com/devs">
+        <div class="data-head2">
+
+            Click here <br />
+            For More Projects
+        </div>
+    </a> -->
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.20.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.20.0/firebase-database.js"></script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-app.js";
+        import {
+            getDatabase,
+            ref,
+            onValue,
+            set,
+        } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-database.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "Put_your_details_here",
+            authDomain: "Put_your_details_here",
+            databaseURL: "Put_your_details_here",
+            projectId: "Put_your_details_here",
+            storageBucket: "Put_your_details_here",
+            messagingSenderId: "Put_your_details_here",
+            appId: "Put_your_details_here",
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // References to data
+        const humidityRef = ref(
+            database,
+            "/IistBiharData/SoilMoisture_DHT_4Relay/humidity"
+        );
+        const tempRef = ref(
+            database,
+            "/IistBiharData/SoilMoisture_DHT_4Relay/temp"
+        );
+        const moistureValueRef = ref(
+            database,
+            "/IistBiharData/SoilMoisture_DHT_4Relay/MoistureValue"
+        );
+
+        const switch1Ref = ref(
+            database,
+            "/IistBiharData/SoilMoisture_DHT_4Relay/relay2"
+        );
+        const switch2Ref = ref(
+            database,
+            "/IistBiharData/SoilMoisture_DHT_4Relay/relay3"
+        );
+        const switch3Ref = ref(
+            database,
+            "/IistBiharData/SoilMoisture_DHT_4Relay/relay4"
+        );
+
+        // Get data and update UI
+        onValue(humidityRef, (snapshot) => {
+            const value = snapshot.val();
+            document.getElementById("humidity").innerHTML = value + " g/m³";
+        });
+
+        onValue(tempRef, (snapshot) => {
+            const value = snapshot.val();
+            document.getElementById("temp").innerHTML = value + " ℃";
+        });
+
+        onValue(moistureValueRef, (snapshot) => {
+            const value = snapshot.val();
+            document.getElementById("MoistureValue").innerHTML = value + "% VWC";
+
+            const motorStatus = document.getElementById("motorStatus");
+            if (value <= 30) {
+                motorStatus.innerHTML =
+                    '<p style="font-size: 30px; font-weight: bold; color:#00d555 ;" class="value2">Motor Status: ON</p>';
+            } else if (value >= 55) {
+                motorStatus.innerHTML =
+                    '<p style="font-size: 30px; font-weight: bold; color:#d50e00 ;" class="value2">Motor Status: OFF</p>';
+            }
+        });
+
+        // Initialize switch states
+        onValue(switch1Ref, (snapshot) => {
+            const value = snapshot.val();
+            const switch1 = document.getElementById("switch1");
+            const status1 = document.getElementById("status1");
+            switch1.checked = value === 1;
+            status1.textContent = value === 1 ? "ON" : "OFF";
+        });
+
+        onValue(switch2Ref, (snapshot) => {
+            const value = snapshot.val();
+            const switch2 = document.getElementById("switch2");
+            const status2 = document.getElementById("status2");
+            switch2.checked = value === 1;
+            status2.textContent = value === 1 ? "ON" : "OFF";
+        });
+
+        onValue(switch3Ref, (snapshot) => {
+            const value = snapshot.val();
+            const switch3 = document.getElementById("switch3");
+            const status3 = document.getElementById("status3");
+            switch3.checked = value === 1;
+            status3.textContent = value === 1 ? "ON" : "OFF";
+        });
+
+        // Set switch states
+        document.getElementById("switch1").addEventListener("change", (event) => {
+            const isChecked = event.target.checked;
+            set(switch1Ref, isChecked ? 1 : 0);
+        });
+
+        document.getElementById("switch2").addEventListener("change", (event) => {
+            const isChecked = event.target.checked;
+            set(switch2Ref, isChecked ? 1 : 0);
+        });
+
+        document.getElementById("switch3").addEventListener("change", (event) => {
+            const isChecked = event.target.checked;
+            set(switch3Ref, isChecked ? 1 : 0);
+        });
+    </script>
+
+
+
+    <script>
+
+        //hack krke kuchh nhi milega bhai, bas ye login system haathi ka daat h or kuchh nhi, bas non-technical bande ko ghumane ke liye
+        const credentials = {
+            username: 'muskan',  //hack krke kuchh nhi milega bhai, bas ye login system haathi ka daat h or kuchh nhi, bas non-technical bande ko ghumane ke liye
+            passwordHash: '4ad99c0b988a4920d295df16d40ea2f29f678c22de155d2a33f12c8f7db04951' //  //hack krke kuchh nhi milega bhai, bas ye login system haathi ka daat h or kuchh nhi, bas non-technical bande ko ghumane ke liye
+        };
+
+        // Function to hash passwords
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+            return hashHex;
+        }
+
+        // Function to handle login
+        async function handleLogin(event) {
+            event.preventDefault(); // Prevent form submission
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const messageElement = document.getElementById('message');
+            const dataContainer = document.getElementById('dataContainer');
+            const loginContainer = document.getElementById('loginContainer');
+
+            if (username === credentials.username) {
+                const passwordHash = await hashPassword(password);
+
+                if (passwordHash === credentials.passwordHash) {
+                    // Store login status in sessionStorage
+                    sessionStorage.setItem('loggedIn', 'true');
+                    sessionStorage.setItem('username', username);
+
+                    messageElement.textContent = 'Login successful!';
+                    messageElement.style.color = 'green';
+                    dataContainer.style.display = 'block'; // Show data container
+                    loginContainer.style.display = 'none'; // Hide login container
+                } else {
+                    messageElement.textContent = 'Invalid password.';
+                    messageElement.style.color = 'red';
+                }
+            } else {
+                messageElement.textContent = 'Invalid username.';
+                messageElement.style.color = 'red';
+            }
+        }
+
+        // Function to handle logout
+        function handleLogout() {
+            // Clear sessionStorage
+            sessionStorage.removeItem('loggedIn');
+            sessionStorage.removeItem('username');
+
+            // Hide data container and show login container
+            document.getElementById('dataContainer').style.display = 'none';
+            document.getElementById('loginContainer').style.display = 'block';
+        }
+
+        // Check login status on page load
+        function checkLoginStatus() {
+            if (sessionStorage.getItem('loggedIn') === 'true') {
+                document.getElementById('loginContainer').style.display = 'none'; // Hide login container
+                document.getElementById('dataContainer').style.display = 'block'; // Show data container
+            }
+        }
+
+        // Add event listener to the login form
+        document.getElementById('loginForm').addEventListener('submit', handleLogin);
+
+        // Add event listener to the logout button
+        document.getElementById('logoutButton').addEventListener('click', handleLogout);
+
+        // Check login status when page loads
+        checkLoginStatus();
+
+    </script>
+</body>
+
+</html>
