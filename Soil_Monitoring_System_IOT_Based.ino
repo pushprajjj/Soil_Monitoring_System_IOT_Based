@@ -9,12 +9,12 @@
 
 LiquidCrystal_I2C lcd(0x27, 16, 2); 
 
-const char* ssid = "Byte4ge";
-const char* password = "11111111";
+const char* ssid = "Your_ssid";
+const char* password = "Your_Password";
 
 //Only for project use DB :xD
-#define API_KEY "AIzaSyAujt_zf6fCCLEPICef4_VAd7W4rSQshJE"
-#define DATABASE_URL "byte4genodemcu-default-rtdb.firebaseio.com"
+#define API_KEY "Your_FirebaseRTb_apiKey"
+#define DATABASE_URL "Your_FirebaseRTb_url"
 
 
 #define SOIL_SENSOR_PIN A0
